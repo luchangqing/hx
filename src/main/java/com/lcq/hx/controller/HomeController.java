@@ -12,11 +12,15 @@ package com.lcq.hx.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HomeController {
-	@RequestMapping("/home")
-	public String home(){
-		return "home";
+	@RequestMapping("/thymeleaftest")
+	public ModelAndView thymeleaftest(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("thymeleaftest");
+		modelAndView.addObject("home","welcome lu");
+		return modelAndView;
 	}
 }
