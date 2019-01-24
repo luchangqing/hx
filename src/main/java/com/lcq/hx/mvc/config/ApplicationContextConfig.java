@@ -10,14 +10,13 @@
  */
 package com.lcq.hx.mvc.config;
 
-import org.springframework.context.annotation.ComponentScan;
+import com.lcq.hx.config.DataSourcesConfig;
+import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
+@Import({DataSourcesConfig.class})
 @ComponentScan(basePackages = {"com.lcq.hx"}, excludeFilters = {@Filter(type = FilterType.ANNOTATION, classes = {EnableWebMvc.class,})})
 @EnableAspectJAutoProxy
 public class ApplicationContextConfig {
