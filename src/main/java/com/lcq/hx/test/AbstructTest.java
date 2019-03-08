@@ -71,9 +71,24 @@ public class AbstructTest {
 	}
 
 	@Test
+	public void getMessageFromQueue(){
+		Object o = jmsTemplate.receiveAndConvert();
+		System.out.println(o);
+		getMessageFromQueue();
+	}
+
+	@Test
 	public void sendMessageToTopic(){
 		jmsTemplate.setDefaultDestination(topic);
 		jmsTemplate.convertAndSend("hexi");
+	}
+
+	@Test
+	public void getMessageFromTopic(){
+		jmsTemplate.setDefaultDestination(topic);
+		Object o = jmsTemplate.receiveAndConvert();
+		System.out.println(o);
+		getMessageFromTopic();
 	}
 
 
