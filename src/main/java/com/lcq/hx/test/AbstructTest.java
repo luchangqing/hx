@@ -14,11 +14,14 @@ import com.lcq.hx.mvc.config.ApplicationContextConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.jms.Topic;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -29,6 +32,12 @@ public class AbstructTest {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	@Autowired
+	private JmsTemplate jmsTemplate;
+	@Autowired
+	private Topic topic;
+	@Autowired
+	private RedisTemplate redisTemplate;
 
 	@Test
 	public void test(){
@@ -50,5 +59,23 @@ public class AbstructTest {
 			}
 		});
 	}
+
+	@Test
+	public void testRedis(){
+		redisTemplate.opsForValue().set("luchangqing","hexi");
+	}
+
+	@Test
+	public void sendMessageToQueue(){
+		jmsTemplate.convertAndSend("luchangqing");
+	}
+
+	@Test
+	public void sendMessageToTopic(){
+		jmsTemplate.setDefaultDestination(topic);
+		jmsTemplate.convertAndSend("hexi");
+	}
+
+
 
 }

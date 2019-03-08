@@ -13,6 +13,9 @@ package com.lcq.hx.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -102,5 +105,21 @@ public class DataSourcesConfig {
 	@Bean
 	public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource){
 		return new NamedParameterJdbcTemplate(dataSource);
+	}
+	@Bean
+	public JedisConnectionFactory jedisConnectionFactory(){
+		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+		redisStandaloneConfiguration.setHostName("10.0.8.119");
+		redisStandaloneConfiguration.setPassword("");
+		redisStandaloneConfiguration.setPort(6379);
+		redisStandaloneConfiguration.setDatabase(15);
+		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
+		return jedisConnectionFactory;
+	}
+	@Bean
+	public RedisTemplate redisTemplate(){
+		RedisTemplate redisTemplate = new RedisTemplate();
+		redisTemplate.setConnectionFactory(jedisConnectionFactory());
+		return redisTemplate;
 	}
 }
